@@ -18,11 +18,11 @@ public class SortList {
         System.out.println("Array Size    |  Selection  |    Merge    |    Quick    |     Heap    |   Radix");
         System.out.print("-------------------------------------------------------------------------------------");
         // start from 50k elements and add 50k till it reaches 300k elements
-        for (int listSize = 50000; listSize <= 300000; listSize += 50000){
-            int [] list = new int[listSize];
+        for (int listSize = 50000; listSize <= 300000; listSize += 50000) {
+            int[] list = new int[listSize];
             // generate random integers to be sorted
-            for (int i = 0; i < list.length; i++){
-                list[i] = (int)(Math.random() * 10000);
+            for (int i = 0; i < list.length; i++) {
+                list[i] = (int) (Math.random() * 10000);
             }
 
             int width = 13;
@@ -67,119 +67,59 @@ public class SortList {
             long endTimeRadix = System.currentTimeMillis();
             long radixTime = endTimeRadix - startTimeRadix;
             System.out.printf("%" + width + "d|", radixTime);
-            /*
-            //  Stack over flow for some reason!?
-            // calculate time for selection sort
-            long startTimeSelection = System.currentTimeMillis();
-            selectionSort(list);
-            long endTimeSelection = System.currentTimeMillis();
-            long selectionTime = endTimeSelection - startTimeSelection;
-
-            // calculate time for merge sort
-            long startTimeMerge = System.currentTimeMillis();
-            mergeSort(list);
-            //quickSort(list);
-            long endTimeMerge = System.currentTimeMillis();
-            long mergeTime = endTimeMerge - startTimeMerge;
-
-            // calculate time for quick sort
-            int[] list2 = new int[listSize];
-            System.arraycopy(list, 0, list2, 0, list.length);
-            long startTime = System.currentTimeMillis();
-            quickSort(list2);
-            long endTime = System.currentTimeMillis();
-            long executionTime = endTime - startTime;
-            System.out.printf("%" + 13 + "d|", executionTime);
-
-            //System.out.println(listSize + "        |   " +  "        |   " + mergeTime);
-            System.out.printf("\n|%" + 13 + "d|", listSize);
-            System.out.printf("%" + 13 + "d|", selectionTime);
-            System.out.printf("%" + 13 + "d|", mergeTime);
-            System.out.printf("%" + 13 + "d|", executionTime);
-            System.out.printf("%" + 13 + "d|", listSize);
-            System.out.printf("%" + 13 + "d|", listSize);
-             */
         }
-        /* for debugging only
-        long startTime = System.currentTimeMillis();
-        int [] list = {2,3,6,8,9,4,10,-4,-3};
-        //selectionSort(list);
-        quickSort(list);
-        long endTime = System.currentTimeMillis();
-        long executionTime = endTime - startTime;
-        System.out.println("\nexecution time is: " + executionTime);
-        for (int value : list) {
-            System.out.print(value + " ");
-        }
-        */
     }
-    /* for debugging only
-    public static void printValue(int arraySize) {
-        int Width = 13;
 
-        int[] list = new int[arraySize];
-        for (int i = 0; i < list.length; i++) {
-            list[i] = (int) (Math.random() * 1000000);
-        }
-        System.out.print("\n|");
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < Width; j++) {
-                System.out.print("-");
-            }
-            System.out.print("|");
-        }
-    } */
-
-    public static void selectionSort(int [] list){
-        for (int i = 0; i < list.length - 1; i++){
+    public static void selectionSort(int[] list) {
+        for (int i = 0; i < list.length - 1; i++) {
             // find the minimum in the list[i ... list.length-1]
             int currentMin = list[i];
             int currentMinIndex = i;
-            for (int j = i + 1; j < list.length; j++){
-                if (currentMin > list[j]){
+            for (int j = i + 1; j < list.length; j++) {
+                if (currentMin > list[j]) {
                     currentMin = list[j];
                     currentMinIndex = j;
                 }
             } // Swap list[i] with list[currentMinIndex] if necessary
-            if (currentMinIndex != i){
+            if (currentMinIndex != i) {
                 list[currentMinIndex] = list[i];
                 list[i] = currentMin;
             }
         }
     }
 
-    public static void mergeSort(int [] list){
-        if (list.length > 1){  // base case
+    public static void mergeSort(int[] list) {
+        if (list.length > 1) {  // base case
             // merge the first half
-            int [] firstHalf = new int[list.length / 2];
-            System.arraycopy(list,0,firstHalf,0,list.length / 2);
+            int[] firstHalf = new int[list.length / 2];
+            System.arraycopy(list, 0, firstHalf, 0, list.length / 2);
             mergeSort(firstHalf);
             // merge sort the second half
             int secondHalfLength = list.length - list.length / 2;
-            int [] secondHalf = new int[secondHalfLength];
-            System.arraycopy(list,list.length / 2,secondHalf,0,secondHalfLength);
+            int[] secondHalf = new int[secondHalfLength];
+            System.arraycopy(list, list.length / 2, secondHalf, 0, secondHalfLength);
             mergeSort(secondHalf);
 
-            merge(firstHalf,secondHalf,list);
+            merge(firstHalf, secondHalf, list);
         }
     }
 
-    public static void merge(int [] list1, int [] list2, int [] temp){
+    public static void merge(int[] list1, int[] list2, int[] temp) {
         int current1 = 0; // current index in list 1
         int current2 = 0; // current index in list 2
         int current3 = 0; // current index in list 3
 
-        while (current1 < list1.length && current2 < list2.length){
-            if (list1[current1] < list2[current2]){
+        while (current1 < list1.length && current2 < list2.length) {
+            if (list1[current1] < list2[current2]) {
                 temp[current3++] = list1[current1++];
             } else {
                 temp[current3++] = list2[current2++];
             }
         } // the rest of list 1 to temp
-        while (current1 < list1.length){
+        while (current1 < list1.length) {
             temp[current3++] = list1[current1++];
         } // the rest of list 2 to temp
-        while (current2 < list2.length){
+        while (current2 < list2.length) {
             temp[current3++] = list2[current2++];
         }
     }
@@ -244,6 +184,7 @@ public class SortList {
         for (int i = list.length - 1; i >= 0; i--)
             list[i] = heap.remove();
     }
+
     static class Heap<E extends Comparable<E>> {
         private java.util.ArrayList<E> list = new java.util.ArrayList<E>();
 
